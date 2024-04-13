@@ -5,12 +5,16 @@ import { Navigate } from 'react-router-dom'
 import Header from '../header/Header'
 import TableInvoices from './TableInvoices'
 import { useQuery } from '@tanstack/react-query'
-import { invoices } from '../service'
+import type { ErrorModel } from '../models'
+import { getInvoices, totalAmount } from '../service'
 
 function Invoices() {
   const user = useAppSelector(selectUser)
 
-  const invoicesData = useQuery({ queryKey: ['invoices'], queryFn: invoices })
+  const invoicesData = useQuery({ queryKey: ['invoices'], queryFn: getInvoices })
+  const myError = invoicesData.error as any as ErrorModel
+  
+  const totalAmountData = useQuery({ queryKey: ['total amount'], queryFn: totalAmount })
 
   if (!user) {
     return <Navigate to={'/'} />
@@ -21,15 +25,18 @@ function Invoices() {
       <Header />
 
       {invoicesData.error ? 
-        <p className='error_message'>{invoicesData.error.message}</p>
+        <p className='error_message'>{myError.response.data.message}</p>
       :
-        <div className='table_container'>
-          {invoicesData.isLoading ?
-            <p>Loading...</p>
-          :
-            <TableInvoices invoices={invoicesData?.data?.data} />
-          }
-        </div>
+        <>
+          <div className='table_container'>
+            {invoicesData.isLoading ?
+              <p>Loading...</p>
+            :
+              <TableInvoices invoices={invoicesData?.data?.data} />
+            }
+          </div>
+          <p>Total amount: {totalAmountData.data?.data?.total ?? 0}</p>
+        </>
       }
     </div>
   )

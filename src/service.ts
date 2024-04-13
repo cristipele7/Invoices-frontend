@@ -10,9 +10,27 @@ export const login = async (data: AuthModel) => {
   })
 }
 
-export const invoices = async () => {
+export const getInvoices = async () => {
   const localUser = localStorage.getItem('user')
   return axios.get(`${baseUrl}/invoice`, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localUser ?? "").accessToken}`
+    }
+  })
+}
+
+export const getInvoice = async (id: number) => {
+  const localUser = localStorage.getItem('user')
+  return axios.get(`${baseUrl}/invoice/${id}`, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localUser ?? "").accessToken}`
+    }
+  })
+}
+
+export const totalAmount = async () => {
+  const localUser = localStorage.getItem('user')
+  return axios.get(`${baseUrl}/invoice/total`, {
     headers: {
       Authorization: `Bearer ${JSON.parse(localUser ?? "").accessToken}`
     }
