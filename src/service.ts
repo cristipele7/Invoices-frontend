@@ -4,7 +4,7 @@ import type { AuthModel } from './models'
 const baseUrl = 'http://localhost:3000'
 
 export const login = async (data: AuthModel) => {
-  return axios.post(`${baseUrl}/auth`, {
+  return axios.post(`${baseUrl}/auth/login`, {
     email: data.email,
     password: data.password
   })
