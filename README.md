@@ -1,3 +1,26 @@
+## .env file
+DATABASE_URL=postgresql://{user}:{password}@localhost:5432/invoices
+JWT_KEY={valid jwt secret/private key}
+
+## Running the app
+
+```bash
+$ npm install
+```
+```bash
+$ npm run dev
+```
+
+## Users
+
+email: user_one@domain.com
+password: useronepassword
+
+email: user_two@domain.com
+password: usertwopassword
+
+
+
 # vite-template-redux
 
 Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
